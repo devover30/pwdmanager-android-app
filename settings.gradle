@@ -1,0 +1,2 @@
+rootProject.name='PassVault'
+include ':app'
