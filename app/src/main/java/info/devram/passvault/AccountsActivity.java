@@ -1,7 +1,6 @@
 package info.devram.passvault;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,11 +12,8 @@ import android.util.Log;
 
 import info.devram.passvault.Models.Accounts;
 import info.devram.passvault.ViewModel.AccountActivityViewModel;
-import info.devram.passvault.controller.AccountListAsync;
-import info.devram.passvault.controller.AccountsHandler;
-import info.devram.passvault.core.RecyclerAccountAdapter;
+import info.devram.passvault.Adapters.RecyclerAccountAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AccountsActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package info.devram.passvault.core;
+package info.devram.passvault.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
