@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import info.devram.passvault.controller.DatabaseHandler;
 
 interface DatabaseService<T> {
 

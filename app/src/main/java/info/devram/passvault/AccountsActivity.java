@@ -82,7 +82,7 @@ public class AccountsActivity extends AppCompatActivity {
 
     }
 
-    public void displayAccounts(List<info.devram.passvault.Models.Accounts> accountList) {
+    public void displayAccounts(List<Accounts> accountList) {
 
         adapter = new RecyclerAccountAdapter(AccountsActivity.this,accountList);
 

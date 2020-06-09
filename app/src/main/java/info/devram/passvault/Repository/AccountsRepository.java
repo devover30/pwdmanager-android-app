@@ -66,6 +66,8 @@ public class AccountsRepository implements DatabaseService<Accounts> {
 
         mutableLiveData.setValue(accounts);
 
+        cursor.close();
+
         return mutableLiveData;
 
     }
@@ -93,6 +95,10 @@ public class AccountsRepository implements DatabaseService<Accounts> {
 
         int count = cursor.getCount();
 
+        cursor.close();
+
         return count;
     }
+
+
 }
