@@ -6,13 +6,14 @@ import java.util.List;
 
 public interface APIService<T> {
 
-    public MutableLiveData<List<T>> getAccounts();
+    public MutableLiveData<List<T>> getApiAccounts();
 
-    public int getAccountsCount();
+    public int getApiAccountsCount();
 
-    public Boolean addAccount(T obj);
+    public Boolean updateApiAccount(T obj);
 
-    public Boolean updateAccount(T obj);
+    public Boolean addApiAccount(T obj);
 
-    public Boolean deleteAccount(T obj);
+    public Boolean deleteApiAccount(T obj);
+
 }

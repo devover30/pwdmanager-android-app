@@ -15,4 +15,4 @@
 .idea/
 app_folder_apk/
 keys/
-gradle.properties
+/gradle.properties

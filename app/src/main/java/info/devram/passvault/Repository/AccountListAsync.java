@@ -1,4 +1,4 @@
-package info.devram.passvault.controller;
+package info.devram.passvault.Repository;
 
 import info.devram.passvault.Models.Accounts;
 
