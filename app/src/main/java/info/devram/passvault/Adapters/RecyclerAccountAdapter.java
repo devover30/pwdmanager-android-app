@@ -1,6 +1,7 @@
 package info.devram.passvault.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import info.devram.passvault.R;
 import info.devram.passvault.Models.Accounts;
+import info.devram.passvault.Repository.RecyclerOnClick;
 
 import java.util.List;
 
@@ -21,10 +23,13 @@ public class RecyclerAccountAdapter extends
 
     private Context context;
     private List<Accounts> accountsList;
+    private RecyclerOnClick onRecylerClick;
 
-    public RecyclerAccountAdapter(Context context, List<Accounts> accountsList) {
+    public RecyclerAccountAdapter(Context context,
+                                  List<Accounts> accountsList, RecyclerOnClick onRecyclerClick) {
         this.context = context;
         this.accountsList = accountsList;
+        this.onRecylerClick = onRecyclerClick;
     }
 
     @NonNull
@@ -34,7 +39,7 @@ public class RecyclerAccountAdapter extends
                     .inflate(R.layout.account_row,parent,false);
 
 
-        return new ViewHolder(view);
+        return new ViewHolder(view,onRecylerClick);
     }
 
     @Override
@@ -42,10 +47,10 @@ public class RecyclerAccountAdapter extends
 
         Accounts account = accountsList.get(position);
 
+        holder.accountType.setText(account.getType());
         holder.accountName.setText(account.getAccountName());
-        holder.loginId.setText(account.getLoginId());
-        holder.loginPwd.setText(account.getLoginPwd());
-        holder.createdDate.setText(account.getCreatedDate());
+//        holder.loginPwd.setText(account.getLoginPwd());
+//        holder.createdDate.setText(account.getCreatedDate());
 
         switch (account.getType()) {
             case "email":
@@ -74,26 +79,41 @@ public class RecyclerAccountAdapter extends
 
     @Override
     public int getItemCount() {
-        return accountsList.size();
+        if (accountsList != null) {
+            return accountsList.size();
+        }
+        return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
 
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        public TextView accountType;
         public TextView accountName;
-        public TextView loginId;
         public TextView loginPwd;
         public TextView createdDate;
         public ImageView imageView;
+        private RecyclerOnClick recyclerOnClick;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView,RecyclerOnClick recyclerOnClick) {
             super(itemView);
 
-            accountName = itemView.findViewById(R.id.name_txt_view);
-            loginId = itemView.findViewById(R.id.loginId_txt_view);
-            loginPwd = itemView.findViewById(R.id.loginpwd_txt_view);
-            createdDate = itemView.findViewById(R.id.date_txt_view);
+            accountType = itemView.findViewById(R.id.type_txt_view);
+            accountName = itemView.findViewById(R.id.accname_txt_view);
+//            loginPwd = itemView.findViewById(R.id.loginpwd_txt_view);
+//            createdDate = itemView.findViewById(R.id.date_txt_view);
             imageView = itemView.findViewById(R.id.icon_img_view);
+            this.recyclerOnClick = recyclerOnClick;
+            itemView.setOnClickListener(this);
+        }
 
+
+
+
+        @Override
+        public void onClick(View v) {
+            onRecylerClick.onItemClicked(getAdapterPosition());
         }
     }
 }

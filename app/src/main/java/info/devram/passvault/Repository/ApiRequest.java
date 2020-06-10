@@ -77,7 +77,7 @@ public class ApiRequest<T> extends Request<T> {
 
     @Override
     protected void deliverResponse(T response) {
-        apiResponseListener.getResult(response);
+
     }
 
 

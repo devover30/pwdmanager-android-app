@@ -1,8 +1,14 @@
 package info.devram.passvault.Repository;
 
+import androidx.lifecycle.MutableLiveData;
+
 import org.json.JSONArray;
 
-public interface ApiResponseListener<T> {
+import java.util.List;
 
-    public void getResult(T response);
+import info.devram.passvault.Models.Accounts;
+
+public interface ApiResponseListener {
+
+    public void getResult(List<Accounts> response);
 }

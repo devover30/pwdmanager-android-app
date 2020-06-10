@@ -9,9 +9,9 @@ interface DatabaseService<T> {
 
     public void addData(T obj);
 
-    public MutableLiveData<List<T>> getAll();
+    public List<T> getAll();
 
-    public MutableLiveData<T> getOne();
+    public T getOne();
 
     public int onUpdate(T obj);
 

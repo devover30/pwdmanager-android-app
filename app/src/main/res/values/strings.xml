@@ -5,9 +5,9 @@
     <string name="login_btn">Login</string>
     <string name="pwd_edit_txt">Enter Password</string>
     <string name="shared_pref">com.devram.pwdvault.TOKEN</string>
-    <string name="account_name">Account Name Goes Here</string>
-    <string name="account_type">Type Goes Here</string>
-    <string name="login_id">Login ID Goes Here</string>
-    <string name="login_pwd">Login Pwd Goes Here</string>
-    <string name="created_date">Date Goes Here</string>
+    <string name="account_name">Account Name</string>
+    <string name="account_type">Type</string>
+    <string name="login_id">Login ID</string>
+    <string name="login_pwd">Login Pwd</string>
+    <string name="created_date">Created Date</string>
 </resources>
