@@ -12,4 +12,5 @@
     <stroke
         android:color="@color/colorAccent"
         android:width="1.5dp" />
+
 </shape>

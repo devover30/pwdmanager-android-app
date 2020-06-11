@@ -78,7 +78,7 @@ public class AccountsActivity extends AppCompatActivity  implements RecyclerOnCl
 
         adapter = new RecyclerAccountAdapter(this,
                 accountActivityViewModel.getAccounts().getValue(),this);
-        Log.i(TAG, "displayAccounts: " + accountActivityViewModel.getAccounts().getValue());
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(AccountsActivity.this));
         recyclerView.setAdapter(adapter);
@@ -86,7 +86,6 @@ public class AccountsActivity extends AppCompatActivity  implements RecyclerOnCl
 
     @Override
     public void onItemClicked(int position) {
-        Log.i(TAG, "onItemClicked: " + position);
 
         Intent intent = new Intent(this,AccountDetail.class);
 
