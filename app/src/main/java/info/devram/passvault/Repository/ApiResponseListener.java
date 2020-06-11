@@ -1,9 +1,5 @@
 package info.devram.passvault.Repository;
 
-import androidx.lifecycle.MutableLiveData;
-
-import org.json.JSONArray;
-
 import java.util.List;
 
 import info.devram.passvault.Models.Accounts;

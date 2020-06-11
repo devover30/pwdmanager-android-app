@@ -1,7 +1,5 @@
 package info.devram.passvault.Models;
 
-import android.database.sqlite.SQLiteDatabase;
-
 public class User {
 
     private String user_email;

@@ -1,4 +1,4 @@
-package info.devram.passvault.Repository;
+package info.devram.passvault.Adapters;
 
 public interface RecyclerOnClick {
 

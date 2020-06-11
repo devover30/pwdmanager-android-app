@@ -1,7 +1,6 @@
 package info.devram.passvault.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import info.devram.passvault.R;
 import info.devram.passvault.Models.Accounts;
-import info.devram.passvault.Repository.RecyclerOnClick;
 
 import java.util.List;
 
@@ -49,8 +47,7 @@ public class RecyclerAccountAdapter extends
 
         holder.accountType.setText(account.getType());
         holder.accountName.setText(account.getAccountName());
-//        holder.loginPwd.setText(account.getLoginPwd());
-//        holder.createdDate.setText(account.getCreatedDate());
+
 
         switch (account.getType()) {
             case "email":
@@ -79,20 +76,13 @@ public class RecyclerAccountAdapter extends
 
     @Override
     public int getItemCount() {
-        if (accountsList != null) {
-            return accountsList.size();
-        }
-        return 0;
+        return accountsList.size();
     }
-
-
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView accountType;
         public TextView accountName;
-        public TextView loginPwd;
-        public TextView createdDate;
         public ImageView imageView;
         private RecyclerOnClick recyclerOnClick;
 
@@ -101,15 +91,10 @@ public class RecyclerAccountAdapter extends
 
             accountType = itemView.findViewById(R.id.type_txt_view);
             accountName = itemView.findViewById(R.id.accname_txt_view);
-//            loginPwd = itemView.findViewById(R.id.loginpwd_txt_view);
-//            createdDate = itemView.findViewById(R.id.date_txt_view);
             imageView = itemView.findViewById(R.id.icon_img_view);
             this.recyclerOnClick = recyclerOnClick;
             itemView.setOnClickListener(this);
         }
-
-
-
 
         @Override
         public void onClick(View v) {

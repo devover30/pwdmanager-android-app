@@ -10,15 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import info.devram.passvault.Models.Accounts;
-import info.devram.passvault.Repository.RecyclerOnClick;
+
+import info.devram.passvault.Adapters.RecyclerOnClick;
 import info.devram.passvault.ViewModel.AccountActivityViewModel;
 import info.devram.passvault.Adapters.RecyclerAccountAdapter;
-import java.util.List;
+
 
 public class AccountsActivity extends AppCompatActivity  implements RecyclerOnClick {
 
@@ -41,20 +40,7 @@ public class AccountsActivity extends AppCompatActivity  implements RecyclerOnCl
 
         recyclerView = findViewById(R.id.accounts_recyclerView);
 
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("click", "onClick: " );
-            }
-        });
         progressBar = findViewById(R.id.progress_bar);
-
-        accountActivityViewModel.getAccounts().observe(this, new Observer<List<Accounts>>() {
-            @Override
-            public void onChanged(List<Accounts> accounts) {
-                adapter.notifyDataSetChanged();
-            }
-        });
 
         accountActivityViewModel.getIsFetching().observe(this, new Observer<Boolean>() {
             @Override

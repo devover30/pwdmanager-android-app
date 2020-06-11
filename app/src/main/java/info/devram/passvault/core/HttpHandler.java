@@ -17,8 +17,6 @@ public class HttpHandler {
     private HttpHandler(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();
-
-
     }
 
     public static synchronized HttpHandler getInstance(Context context) {
@@ -39,9 +37,4 @@ public class HttpHandler {
     public <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
     }
-
-
-
-
-
 }
