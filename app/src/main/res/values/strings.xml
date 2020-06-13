@@ -10,4 +10,13 @@
     <string name="login_id">Login ID</string>
     <string name="login_pwd">Login Pwd</string>
     <string name="created_date">Created Date</string>
+    <string-array name="expense_type">
+        <item>Select Type</item>
+        <item>Email</item>
+        <item>Application</item>
+        <item>Social Networking</item>
+        <item>Finance</item>
+        <item>Website</item>
+        <item>Others</item>
+    </string-array>
 </resources>
