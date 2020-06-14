@@ -42,16 +42,11 @@ public class AccountActivityViewModel extends AndroidViewModel {
 
         mIsUpdating.setValue(true);
 
-        final int dbRecordCount = dbAccountsRepository.getCount();
+        accountsList = dbAccountsRepository.getAll();
 
-        if (dbRecordCount == 0) {
-            loadAccountFromApi();
-        }else {
-            accountsList = dbAccountsRepository.getAll();
+        mAccountsLiveData.setValue(accountsList);
 
-            mAccountsLiveData.setValue(accountsList);
-            mIsUpdating.postValue(false);
-        }
+        mIsUpdating.postValue(false);
 
         return mAccountsLiveData;
 
@@ -102,6 +97,15 @@ public class AccountActivityViewModel extends AndroidViewModel {
 
         if (dbOperationResult) {
             mIsUpdating.setValue(false);
+        }
+
+    }
+
+    public void deleteAccount(int item) {
+        if (mAccountsLiveData.getValue() != null) {
+            Accounts account = mAccountsLiveData.getValue().get(item);
+
+            dbAccountsRepository.onDelete(account);
         }
 
     }

@@ -1,7 +1,6 @@
 package info.devram.tizori.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +86,11 @@ public class RecyclerAccountAdapter extends
         notifyDataSetChanged();
     }
 
+    public void clearData() {
+        accountsList.clear();
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView accountType;
@@ -106,7 +110,8 @@ public class RecyclerAccountAdapter extends
 
         @Override
         public void onClick(View v) {
-            onRecylerClick.onItemClicked(getAdapterPosition());
+            String accountType = accountsList.get(getAdapterPosition()).getType();
+            onRecylerClick.onItemClicked(getAdapterPosition(),accountType);
         }
     }
 }

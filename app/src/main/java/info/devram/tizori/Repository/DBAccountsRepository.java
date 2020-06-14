@@ -61,7 +61,7 @@ public class DBAccountsRepository implements
 
                 Accounts account = new Accounts();
                 account.setId(cursor
-                        .getString(cursor.getColumnIndex(Util.KEY_ID)));
+                        .getInt(cursor.getColumnIndex(Util.KEY_ID)));
                 account.setType(cursor
                         .getString(cursor.getColumnIndex(Util.KEY_TYPE)));
                 account.setAccountName(cursor
@@ -94,7 +94,8 @@ public class DBAccountsRepository implements
 
     @Override
     public void onDelete(Accounts obj) {
-
+        db.getWritableDatabase().delete(Util.TABLE_NAME,Util.KEY_ID + "=?",
+                new String[]{String.valueOf(obj.getId())});
     }
 
     @Override

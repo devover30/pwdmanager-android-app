@@ -21,7 +21,7 @@ import info.devram.tizori.ViewModel.AccountActivityViewModel;
 
 public class AddAccount extends AppCompatActivity {
 
-    private static final String TAG = "AddAccount";
+    //private static final String TAG = "AddAccount";
 
     private Spinner spinner;
     private ArrayAdapter<CharSequence> adapter;
@@ -40,6 +40,8 @@ public class AddAccount extends AppCompatActivity {
 
         isAccountSaved = false;
 
+        setTitle("Add Account");
+
         accountActivityViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 getApplication()).create(AccountActivityViewModel.class);
 
@@ -49,7 +51,7 @@ public class AddAccount extends AppCompatActivity {
         loginIdEditText = findViewById(R.id.login_id_edit_txt);
         loginPwdEditText = findViewById(R.id.login_pwd_edit_txt);
 
-         addAccountGroup = (ViewGroup) findViewById(R.id.add_account_group);
+        addAccountGroup = (ViewGroup) findViewById(R.id.add_account_group);
 
         adapter = ArrayAdapter.createFromResource(this,
                 R.array.expense_type,android.R.layout.simple_spinner_item);

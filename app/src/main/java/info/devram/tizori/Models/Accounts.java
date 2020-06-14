@@ -6,7 +6,7 @@ import info.devram.tizori.Config.Util;
 
 public class Accounts {
 
-    private String id;
+    private int id;
     private String type;
     private String accountName;
     private String loginId;
@@ -16,11 +16,11 @@ public class Accounts {
     public Accounts() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

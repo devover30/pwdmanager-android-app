@@ -15,5 +15,5 @@ public class Util {
 
     public static final String KEY_URL_LOGIN = "https://pwdmanager.devram.info/auth";
     public static final String KEY_URL_ACCOUNTS = "https://pwdmanager.devram.info/accounts";
-    public static final String KEY_URL_USERS = "https://pwdmanager.devram.info/users";
+    //public static final String KEY_URL_USERS = "https://pwdmanager.devram.info/users";
 }

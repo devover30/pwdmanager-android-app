@@ -10,13 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
-
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.List;
 
 import info.devram.tizori.Adapters.RecyclerOnClick;
@@ -27,7 +22,7 @@ import info.devram.tizori.Adapters.RecyclerAccountAdapter;
 
 public class AccountsActivity extends AppCompatActivity implements RecyclerOnClick {
 
-    public static final String TAG = "AccountsActivity";
+    //public static final String TAG = "AccountsActivity";
 
     public static final int REQUEST_CODE = 1;
 
@@ -40,13 +35,15 @@ public class AccountsActivity extends AppCompatActivity implements RecyclerOnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accounts);
 
+        setTitle("DashBoard");
+
         accountActivityViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 getApplication()).create(AccountActivityViewModel.class);
 
 
         recyclerView = findViewById(R.id.accounts_recyclerView);
 
-        final ProgressBar progressBar = findViewById(R.id.progress_bar);
+
         final FloatingActionButton accountAddFab = findViewById(R.id.fab_add_btn);
 
 
@@ -76,21 +73,7 @@ public class AccountsActivity extends AppCompatActivity implements RecyclerOnCli
 
 
 
-        accountActivityViewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    recyclerView.setVisibility(View.INVISIBLE);
 
-                }else {
-
-                    progressBar.setVisibility(View.INVISIBLE);
-                    recyclerView.setVisibility(View.VISIBLE);
-
-                }
-            }
-        });
     }
 
 
@@ -103,13 +86,14 @@ public class AccountsActivity extends AppCompatActivity implements RecyclerOnCli
     }
 
     @Override
-    public void onItemClicked(int position) {
+    public void onItemClicked(int position,String accountType) {
 
         Intent intent = new Intent(this,AccountDetail.class);
 
         intent.putExtra("position",position);
+        intent.putExtra("type",accountType);
 
-        startActivity(intent);
+        startActivityForResult(intent,REQUEST_CODE);
     }
 
     @Override
@@ -121,21 +105,31 @@ public class AccountsActivity extends AppCompatActivity implements RecyclerOnCli
                 assert data != null;
                 boolean isNewAccount = data.getBooleanExtra("save", false);
                 if (isNewAccount) {
-                    List<Accounts> newAccountsList = accountActivityViewModel
-                            .getAccounts().getValue();
+                    updateRecyclerView();
+                }
+                boolean isAccountDeleted = data.getBooleanExtra("delete",false);
 
-                    assert newAccountsList != null;
-                    if (newAccountsList.size() == 1) {
-                        displayAccounts(newAccountsList);
-                    }else {
-                        adapter.addData(newAccountsList);
-                    }
-
+                if (isAccountDeleted) {
+                    updateRecyclerView();
                 }
             }
         }
 
     }
 
+    private void updateRecyclerView() {
+        List<Accounts> newAccountsList = accountActivityViewModel
+                .getAccounts().getValue();
 
+        assert newAccountsList != null;
+
+        if (newAccountsList.size() == 1) {
+            displayAccounts(newAccountsList);
+        }else if(newAccountsList.size() > 0) {
+            adapter.addData(newAccountsList);
+        }else {
+            adapter.clearData();
+        }
+
+    }
 }
