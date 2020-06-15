@@ -10,7 +10,7 @@
         android:right="12dp" />
 
     <stroke
-        android:color="@color/colorAccent"
+        android:color="@color/alterAccent"
         android:width="1.5dp" />
 
 </shape>

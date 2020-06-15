@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">PassVault</string>
+    <string name="app_name">Tizori App</string>
+    <string name="action_settings">Settings</string>
     <string name="login_txtView">LOGIN</string>
     <string name="email_edit_txt">Enter Email</string>
-    <string name="login_btn">Login</string>
+    <string name="login_btn">submit</string>
     <string name="pwd_edit_txt">Enter Password</string>
     <string name="shared_pref">com.devram.pwdvault.TOKEN</string>
     <string name="account_name">Account Name</string>
@@ -10,4 +11,13 @@
     <string name="login_id">Login ID</string>
     <string name="login_pwd">Login Pwd</string>
     <string name="created_date">Created Date</string>
+    <string-array name="expense_type">
+        <item>Select Type</item>
+        <item>Email</item>
+        <item>Application</item>
+        <item>Social Networking</item>
+        <item>Finance</item>
+        <item>Website</item>
+        <item>Others</item>
+    </string-array>
 </resources>
