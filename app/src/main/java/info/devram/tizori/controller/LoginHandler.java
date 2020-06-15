@@ -2,6 +2,7 @@ package info.devram.tizori.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 
 import com.android.volley.Request;
@@ -58,6 +59,14 @@ public class LoginHandler {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse == null) {
+
+                            callback.responseError(true);
+                        }else {
+
+                            callback.responseError(false);
+                        }
+
                         sharedPreferences = context
                                 .getSharedPreferences("login_handler",Context.MODE_PRIVATE);
                         editor = sharedPreferences.edit();
