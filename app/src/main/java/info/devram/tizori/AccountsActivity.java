@@ -2,6 +2,7 @@ package info.devram.tizori;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -10,22 +11,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 import info.devram.tizori.Adapters.RecyclerOnClick;
 import info.devram.tizori.Models.Accounts;
+import info.devram.tizori.UI.ConfirmDialog;
 import info.devram.tizori.ViewModel.AccountActivityViewModel;
 import info.devram.tizori.Adapters.RecyclerAccountAdapter;
 
 
-public class AccountsActivity extends AppCompatActivity implements RecyclerOnClick {
+public class AccountsActivity extends AppCompatActivity
+        implements RecyclerOnClick, ConfirmDialog.ConfirmDialogListener {
 
-    //public static final String TAG = "AccountsActivity";
+    public static final String TAG = "AccountsActivity";
 
     public static final int REQUEST_CODE = 1;
-
+    private int accountPosition;
     private RecyclerView recyclerView;
     private RecyclerAccountAdapter adapter;
     private AccountActivityViewModel accountActivityViewModel;
@@ -54,7 +64,7 @@ public class AccountsActivity extends AppCompatActivity implements RecyclerOnCli
                 Intent addActivity = new Intent(AccountsActivity.this,
                         AddAccount.class);
 
-                startActivityForResult(addActivity,REQUEST_CODE);
+                startActivityForResult(addActivity, REQUEST_CODE);
 
 
             }
@@ -72,28 +82,50 @@ public class AccountsActivity extends AppCompatActivity implements RecyclerOnCli
         });
 
 
-
-
     }
 
 
     public void displayAccounts(List<Accounts> accounts) {
         adapter = new RecyclerAccountAdapter(this,
-                accounts,this);
+                accounts, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(AccountsActivity.this));
 
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void onItemClicked(int position,String accountType) {
+    public void onItemClicked(View view, final int position, final String accountType) {
+        Log.d(TAG, "onItemClicked: " + position);
+        PopupMenu popupMenu = new PopupMenu(view.getContext(), view, Gravity.CENTER);
 
-        Intent intent = new Intent(this,AccountDetail.class);
+        popupMenu.getMenuInflater().inflate(R.menu.options_menu, popupMenu.getMenu());
 
-        intent.putExtra("position",position);
-        intent.putExtra("type",accountType);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.editMenuItem:
+                        Intent intent = new Intent(AccountsActivity.this,
+                                AccountDetail.class);
 
-        startActivityForResult(intent,REQUEST_CODE);
+                        intent.putExtra("position", position);
+                        intent.putExtra("type", accountType);
+
+                        startActivityForResult(intent, REQUEST_CODE);
+                        break;
+                    case R.id.deleteMenuItem:
+                        showDialog();
+                        accountPosition = position;
+                        break;
+                    default:
+                }
+                return true;
+            }
+        });
+
+        popupMenu.show();
+
+
     }
 
     @Override
@@ -107,9 +139,9 @@ public class AccountsActivity extends AppCompatActivity implements RecyclerOnCli
                 if (isNewAccount) {
                     updateRecyclerView();
                 }
-                boolean isAccountDeleted = data.getBooleanExtra("delete",false);
+                boolean isAccountEdited = data.getBooleanExtra("edit", false);
 
-                if (isAccountDeleted) {
+                if (isAccountEdited) {
                     updateRecyclerView();
                 }
             }
@@ -122,14 +154,27 @@ public class AccountsActivity extends AppCompatActivity implements RecyclerOnCli
                 .getAccounts().getValue();
 
         assert newAccountsList != null;
-
-        if (newAccountsList.size() == 1) {
-            displayAccounts(newAccountsList);
-        }else if(newAccountsList.size() > 0) {
-            adapter.addData(newAccountsList);
-        }else {
-            adapter.clearData();
-        }
-
+        displayAccounts(newAccountsList);
     }
+
+    private void showDialog() {
+        //private static final String TAG = "AccountDetail";
+        DialogFragment confirmDialog = new ConfirmDialog();
+
+        confirmDialog.show(getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void onCancelClick(DialogFragment dialogFragment) {
+        dialogFragment.dismiss();
+    }
+
+    @Override
+    public void onOkClick(final DialogFragment dialogFragment) {
+        accountActivityViewModel.deleteAccount(accountPosition);
+        updateRecyclerView();
+        dialogFragment.dismiss();
+    }
+
+
 }

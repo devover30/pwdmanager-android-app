@@ -9,9 +9,9 @@ interface DatabaseService<T> {
 
     public List<T> getAll();
 
-    public T getOne();
+    public T getOne(int id);
 
-    public int onUpdate(T obj);
+    public Boolean onUpdate(T obj);
 
     public void onDelete(T obj);
 

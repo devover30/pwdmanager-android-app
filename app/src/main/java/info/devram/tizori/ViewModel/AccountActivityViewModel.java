@@ -101,6 +101,15 @@ public class AccountActivityViewModel extends AndroidViewModel {
 
     }
 
+    public void editAccount(int position, Accounts newAccount) {
+        if(dbAccountsRepository.onUpdate(newAccount)) {
+            accountsList = mAccountsLiveData.getValue();
+            accountsList.set(position,newAccount);
+            mAccountsLiveData.setValue(accountsList);
+        }
+
+    }
+
     public void deleteAccount(int item) {
         if (mAccountsLiveData.getValue() != null) {
             Accounts account = mAccountsLiveData.getValue().get(item);
