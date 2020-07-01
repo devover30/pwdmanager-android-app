@@ -1,94 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:id="@+id/cardView"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.50"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.0"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/cardView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:id="@+id/title_txt_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-            <TextView
-                android:id="@+id/title_txt_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        android:background="@color/alterAccent"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-                android:background="@color/alterAccent"
-                android:text="@string/app_name"
-                android:textAlignment="center"
-                android:textSize="32sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/message_txt_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/title_txt_view"
+        app:layout_constraintStart_toStartOf="@+id/title_txt_view"
+        app:layout_constraintTop_toBottomOf="@+id/title_txt_view" />
 
-            <TextView
-                android:id="@+id/message_txt_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:text="@string/app_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/heading_txt_view" />
 
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="409dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="48dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/message_txt_view" />
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/message_txt_view"
+        app:layout_constraintStart_toStartOf="@+id/message_txt_view"
+        app:layout_constraintTop_toBottomOf="@+id/message_txt_view" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_btn_primary"
+        android:text="@string/cancel"
+        app:layout_constraintStart_toStartOf="@+id/divider2"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
-                <Button
-                    android:id="@+id/cancel_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="48dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Cancel" />
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="1dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toStartOf="@+id/ok_btn"
+        app:layout_constraintStart_toEndOf="@+id/cancel_btn"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
-                <View
-                    android:id="@+id/divider3"
-                    android:layout_width="1dp"
-                    android:layout_height="75dp"
-                    android:layout_centerInParent="true"
-                    android:background="?android:attr/listDivider" />
+    <Button
+        android:id="@+id/ok_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="56dp"
+        android:background="@drawable/shape_btn_primary"
+        android:text="@string/ok"
+        app:layout_constraintBaseline_toBaselineOf="@+id/cancel_btn"
+        app:layout_constraintEnd_toEndOf="@+id/divider2" />
 
-                <Button
-                    android:id="@+id/ok_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="48dp"
-                    android:text="OK" />
-            </RelativeLayout>
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
+</androidx.constraintlayout.widget.ConstraintLayout>

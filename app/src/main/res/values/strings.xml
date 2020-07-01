@@ -11,6 +11,13 @@
     <string name="login_id">Login ID</string>
     <string name="login_pwd">Login Pwd</string>
     <string name="created_date">Created Date</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="id">ID</string>
+    <string name="password">Password</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="_8942">⋮</string>
     <string-array name="expense_type">
         <item>Select Type</item>
         <item>Email</item>

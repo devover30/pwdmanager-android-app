@@ -20,8 +20,7 @@
             android:id="@+id/acc_name_det_txt_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="Account Name"
+            android:hint="@string/account_name"
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="265dp" />
 
@@ -40,8 +39,7 @@
             android:id="@+id/login_id_det_txt_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="ID"
+            android:hint="@string/id"
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="265dp" />
 
@@ -60,8 +58,7 @@
             android:id="@+id/login_pwd_det_txt_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="Password"
+            android:hint="@string/password"
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="265dp" />
 
@@ -73,27 +70,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:background="@drawable/shape_btn_primary"
-        android:text="Edit"
+        android:text="@string/edit"
         android:textSize="16sp"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_layout" />
-
-    <Button
-        android:id="@+id/delete_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_btn_primary"
-        android:text="Delete"
-        android:textSize="16sp"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_btn"
-        app:layout_constraintVertical_bias="0.114" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

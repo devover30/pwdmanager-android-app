@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,13 +42,14 @@ public class RecyclerAccountAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
         Accounts account = accountsList.get(position);
 
         holder.accountType.setText(account.getType());
         holder.accountName.setText(account.getAccountName());
-
+        holder.accountLoginID.setText(account.getLoginId());
+        holder.accountLoginPwd.setText(account.getLoginPwd());
 
         switch (account.getType()) {
             case "email":
@@ -95,7 +97,10 @@ public class RecyclerAccountAdapter extends
 
         public TextView accountType;
         public TextView accountName;
+        public TextView accountLoginID;
+        public TextView accountLoginPwd;
         public ImageView imageView;
+        public TextView optionsMenu;
         private RecyclerOnClick recyclerOnClick;
 
         public ViewHolder(@NonNull View itemView,RecyclerOnClick recyclerOnClick) {
@@ -103,15 +108,19 @@ public class RecyclerAccountAdapter extends
 
             accountType = itemView.findViewById(R.id.type_txt_view);
             accountName = itemView.findViewById(R.id.accname_txt_view);
+            accountLoginID = itemView.findViewById(R.id.accLoginId);
+            accountLoginPwd = itemView.findViewById(R.id.accLoginPwd);
             imageView = itemView.findViewById(R.id.icon_img_view);
+            optionsMenu = itemView.findViewById(R.id.textViewOptions);
             this.recyclerOnClick = recyclerOnClick;
-            itemView.setOnClickListener(this);
+            optionsMenu.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             String accountType = accountsList.get(getAdapterPosition()).getType();
-            onRecylerClick.onItemClicked(getAdapterPosition(),accountType);
+            recyclerOnClick.onItemClicked(v,getAdapterPosition(),accountType);
         }
     }
 }

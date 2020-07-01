@@ -1,7 +1,6 @@
 package info.devram.tizori;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -10,19 +9,19 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import java.util.List;
 
 import info.devram.tizori.Models.Accounts;
-import info.devram.tizori.UI.ConfirmDialog;
 import info.devram.tizori.ViewModel.AccountActivityViewModel;
 
 public class AccountDetail extends AppCompatActivity implements
-        View.OnClickListener, ConfirmDialog.ConfirmDialogListener {
+        View.OnClickListener {
 
-    //private static final String TAG = "AccountDetail";
-    private DialogFragment confirmDialog;
-    private List<Accounts> accountsList;
     private AccountActivityViewModel accountActivityViewModel;
+    private EditText accountNameDetail;
+    private EditText accountLoginIdDetail;
+    private EditText accountLoginPwdDetail;
+    private Button editButton;
+    private Accounts account;
     int accountPosition;
 
     @Override
@@ -32,33 +31,30 @@ public class AccountDetail extends AppCompatActivity implements
 
         String accType = getIntent().getStringExtra("type");
 
-        accType = accType.substring(0,1).toUpperCase() + accType.substring(1);
+        accType = accType.substring(0, 1).toUpperCase() + accType.substring(1);
 
         setTitle(accType);
 
         accountActivityViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 getApplication()).create(AccountActivityViewModel.class);
 
-         accountsList = accountActivityViewModel.getAccounts().getValue();
+        accountPosition = getIntent().getIntExtra("position", 0);
 
-        accountPosition = getIntent().getIntExtra("position",0);
+        account = accountActivityViewModel.getAccounts().getValue().get(accountPosition);
 
+        accountNameDetail = findViewById(R.id.acc_name_det_txt_view);
+        accountLoginIdDetail = findViewById(R.id.login_id_det_txt_view);
+        accountLoginPwdDetail = findViewById(R.id.login_pwd_det_txt_view);
+        editButton = findViewById(R.id.edit_btn);
 
-        EditText accountNameDetail = findViewById(R.id.acc_name_det_txt_view);
-        EditText accountLoginIdDetail = findViewById(R.id.login_id_det_txt_view);
-        EditText accountLoginPwdDetail = findViewById(R.id.login_pwd_det_txt_view);
-        Button editButton = findViewById(R.id.edit_btn);
-        Button deleteButton = findViewById(R.id.delete_btn);
 
         editButton.setOnClickListener(this);
-        deleteButton.setOnClickListener(this);
 
 
-        accountNameDetail.setText(accountsList.get(accountPosition).getAccountName());
+        accountNameDetail.setText(account.getAccountName());
 
-        accountLoginIdDetail.setText(accountsList.get(accountPosition).getLoginId());
-        accountLoginPwdDetail.setText(accountsList.get(accountPosition).getLoginPwd());
-
+        accountLoginIdDetail.setText(account.getLoginId());
+        accountLoginPwdDetail.setText(account.getLoginPwd());
 
 
 //        String date = accountsList.get(position).getCreatedDate();
@@ -77,31 +73,14 @@ public class AccountDetail extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.edit_btn:
-                break;
-            case R.id.delete_btn:
-                showDialog();
-        }
-    }
+        account.setAccountName(accountNameDetail.getText().toString());
+        account.setLoginId(accountLoginIdDetail.getText().toString());
+        account.setLoginPwd(accountLoginPwdDetail.getText().toString());
 
-    private void showDialog() {
-        confirmDialog = new ConfirmDialog();
+        accountActivityViewModel.editAccount(accountPosition,account);
 
-        confirmDialog.show(getSupportFragmentManager(),null);
-    }
-
-    @Override
-    public void onCancelClick(DialogFragment dialogFragment) {
-        dialogFragment.dismiss();
-    }
-
-    @Override
-    public void onOkClick(DialogFragment dialogFragment) {
-        dialogFragment.dismiss();
-        accountActivityViewModel.deleteAccount(accountPosition);
         Intent resultIntent = getIntent();
-        resultIntent.putExtra("delete",true);
+        resultIntent.putExtra("edit",true);
         setResult(1,resultIntent);
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -83,13 +83,42 @@ public class DBAccountsRepository implements
     }
 
     @Override
-    public Accounts getOne() {
-        return null;
+    public Accounts getOne(int id) {
+        Cursor cursor = db.getReadableDatabase().query(
+                Util.TABLE_NAME,new String[]{
+                        Util.KEY_ID,Util.KEY_ACCOUNT_NAME,Util.KEY_LOGIN_ID,
+                        Util.KEY_LOGIN_PWD,Util.KEY_CREATED_DATE
+                },Util.KEY_ID + "=?",new String[]{String.valueOf(id)},
+                null,null,null
+        );
+
+        Accounts account = new Accounts();
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            account.setId(cursor.getInt(cursor.getColumnIndex(Util.KEY_ID)));
+            account.setAccountName(cursor.getString(cursor.getColumnIndex(Util.KEY_ACCOUNT_NAME)));
+            account.setLoginId(cursor.getString(cursor.getColumnIndex(Util.KEY_ACCOUNT_NAME)));
+            account.setLoginPwd(cursor.getString(cursor.getColumnIndex(Util.KEY_ACCOUNT_NAME)));
+            account.setCreatedDate(cursor.getColumnName(cursor.getColumnIndex(Util.KEY_ACCOUNT_NAME)));
+            cursor.close();
+        }
+        return account;
     }
 
     @Override
-    public int onUpdate(Accounts obj) {
-        return 0;
+    public Boolean onUpdate(Accounts obj) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Util.KEY_TYPE,obj.getType());
+        contentValues.put(Util.KEY_ACCOUNT_NAME,obj.getAccountName());
+        contentValues.put(Util.KEY_LOGIN_ID,obj.getLoginId());
+        contentValues.put(Util.KEY_LOGIN_PWD,obj.getLoginPwd());
+        contentValues.put(Util.KEY_CREATED_DATE,obj.getCreatedDate());
+
+        db.getWritableDatabase().update(Util.TABLE_NAME,contentValues,
+                Util.KEY_ID + "=?",new String[]{String.valueOf(obj.getId())});
+
+        return true;
     }
 
     @Override
