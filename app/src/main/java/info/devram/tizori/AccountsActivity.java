@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,24 +21,28 @@ import android.widget.PopupMenu;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import info.devram.tizori.Interfaces.ApiResponseListener;
 import info.devram.tizori.Interfaces.RecyclerOnClick;
 import info.devram.tizori.Models.Accounts;
+import info.devram.tizori.Services.GetAccountsService;
 import info.devram.tizori.UI.ConfirmDialog;
 import info.devram.tizori.ViewModel.AccountActivityViewModel;
 import info.devram.tizori.Adapters.RecyclerAccountAdapter;
 
 
 public class AccountsActivity extends AppCompatActivity
-        implements RecyclerOnClick, ConfirmDialog.ConfirmDialogListener {
+        implements RecyclerOnClick, ConfirmDialog.ConfirmDialogListener, ApiResponseListener {
 
     public static final String TAG = "AccountsActivity";
 
     public static final int REQUEST_CODE = 1;
     private int accountPosition;
     private RecyclerView recyclerView;
-    private RecyclerAccountAdapter adapter;
     private AccountActivityViewModel accountActivityViewModel;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,41 +57,25 @@ public class AccountsActivity extends AppCompatActivity
 
         recyclerView = findViewById(R.id.accounts_recyclerView);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("token",MODE_PRIVATE);
 
-        final FloatingActionButton accountAddFab = findViewById(R.id.fab_add_btn);
-
-
-        accountAddFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent addActivity = new Intent(AccountsActivity.this,
-                        AddAccount.class);
-
-                startActivityForResult(addActivity, REQUEST_CODE);
-
-
-            }
-        });
-
-        accountActivityViewModel.getAccounts().observe(this, new Observer<List<Accounts>>() {
-            @Override
-            public void onChanged(List<Accounts> accounts) {
-
-                if (accounts.size() > 0) {
-                    displayAccounts(accounts);
-
-                }
-            }
-        });
+        token = sharedPreferences.getString("token","");
 
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (token != null) {
+            ExecutorService executorService = Executors.newCachedThreadPool();
+            GetAccountsService getAccountsService = new GetAccountsService(token, this);
+            executorService.execute(getAccountsService);
+        }
+    }
 
     public void displayAccounts(List<Accounts> accounts) {
-        adapter = new RecyclerAccountAdapter(this,
-                accounts, this);
+        RecyclerAccountAdapter adapter = new RecyclerAccountAdapter(accounts);
         recyclerView.setLayoutManager(new LinearLayoutManager(AccountsActivity.this));
 
         recyclerView.setAdapter(adapter);
@@ -176,4 +165,13 @@ public class AccountsActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void getResult(List<Accounts> response) {
+        Log.d(TAG, "getResult: starts");
+        if (response.size() > 0) {
+            displayAccounts(response);
+        }
+        Log.d(TAG, "getResult: " + response);
+        Log.d(TAG, "getResult: ends");
+    }
 }

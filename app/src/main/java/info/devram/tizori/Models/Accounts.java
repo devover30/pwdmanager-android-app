@@ -7,7 +7,7 @@ import info.devram.tizori.Interfaces.ModelsHandler;
 
 public class Accounts {
 
-    private int id;
+    private String id;
     private String type;
     private String accountName;
     private String loginId;
@@ -17,11 +17,11 @@ public class Accounts {
     public Accounts() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -65,6 +65,18 @@ public class Accounts {
     public void setCreatedDate(String createdDate) {
 
         this.createdDate = createdDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Accounts{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", loginId='" + loginId + '\'' +
+                ", loginPwd='" + loginPwd + '\'' +
+                ", createdDate='" + createdDate + '\'' +
+                '}';
     }
 
     public static class Model implements ModelsHandler {

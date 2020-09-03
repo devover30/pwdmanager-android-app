@@ -1,4 +1,4 @@
-package info.devram.tizori.Controller;
+package info.devram.tizori.Services;
 
 import android.content.SharedPreferences;
 import android.util.Base64;
@@ -14,10 +14,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import info.devram.tizori.Config.Util;
-import info.devram.tizori.Interfaces.LoginAsyncListener;
+import info.devram.tizori.Interfaces.HttpAsyncListener;
 import info.devram.tizori.Models.UserEntity;
 
-public class LoginHandler implements Runnable {
+public class LoginService implements Runnable {
 
     private static final String TAG = "LoginHandler";
 
@@ -25,10 +25,10 @@ public class LoginHandler implements Runnable {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private UserEntity userEntity;
-    private LoginAsyncListener mListener;
+    private HttpAsyncListener mListener;
     private int responseCode;
 
-    public LoginHandler(UserEntity userEntity, LoginAsyncListener mListener) {
+    public LoginService(UserEntity userEntity, HttpAsyncListener mListener) {
         this.userEntity = userEntity;
         this.mListener = mListener;
     }
@@ -95,7 +95,7 @@ public class LoginHandler implements Runnable {
         try {
             if (data != null) {
                 JSONObject jsonObject = new JSONObject(data);
-                mListener.loginResponse(jsonObject, responseCode);
+                mListener.httpResponse(jsonObject, responseCode);
             }
         } catch (JSONException e) {
             e.printStackTrace();

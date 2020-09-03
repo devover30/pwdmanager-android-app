@@ -62,7 +62,7 @@ public class DBAccountsRepository implements
 
                 Accounts account = new Accounts();
                 account.setId(cursor
-                        .getInt(cursor.getColumnIndex(Util.KEY_ID)));
+                        .getString(cursor.getColumnIndex(Util.KEY_ID)));
                 account.setType(cursor
                         .getString(cursor.getColumnIndex(Util.KEY_TYPE)));
                 account.setAccountName(cursor
@@ -97,7 +97,7 @@ public class DBAccountsRepository implements
 
         if (cursor != null) {
             cursor.moveToFirst();
-            account.setId(cursor.getInt(cursor.getColumnIndex(Util.KEY_ID)));
+            account.setId(cursor.getString(cursor.getColumnIndex(Util.KEY_ID)));
             account.setAccountName(cursor.getString(cursor.getColumnIndex(Util.KEY_ACCOUNT_NAME)));
             account.setLoginId(cursor.getString(cursor.getColumnIndex(Util.KEY_ACCOUNT_NAME)));
             account.setLoginPwd(cursor.getString(cursor.getColumnIndex(Util.KEY_ACCOUNT_NAME)));

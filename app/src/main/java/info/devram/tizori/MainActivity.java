@@ -21,19 +21,20 @@ import org.json.JSONObject;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import info.devram.tizori.Controller.LoginHandler;
-import info.devram.tizori.Interfaces.LoginAsyncListener;
+import info.devram.tizori.Services.LoginService;
+import info.devram.tizori.Interfaces.HttpAsyncListener;
 import info.devram.tizori.Models.UserEntity;
 
 
 public class MainActivity extends AppCompatActivity
-        implements View.OnClickListener, LoginAsyncListener {
+        implements View.OnClickListener, HttpAsyncListener {
 
     private static final String TAG = "MainActivity";
     
     private EditText userEmail;
     private EditText userPassword;
     private Button loginButton;
+    private ExecutorService executorService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +79,9 @@ public class MainActivity extends AppCompatActivity
         userEntity.setUser_email(userEmail.getText().toString().trim());
         userEntity.setUser_pwd(userPassword.getText().toString().trim());
         Log.d(TAG, "onClick: " + userEntity);
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        LoginHandler loginHandler = new LoginHandler(userEntity,this);
-        executorService.execute(loginHandler);
+        executorService = Executors.newCachedThreadPool();
+        LoginService loginService = new LoginService(userEntity,this);
+        executorService.execute(loginService);
         Log.d(TAG, "onClick: ends");
     }
 
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void loginResponse(JSONObject jsonObject,int statusCode) {
+    public void httpResponse(JSONObject jsonObject, int statusCode) {
         Log.d(TAG, "loginResponse: starts");
         if (statusCode == 200) {
             SharedPreferences sharedPreferences = getSharedPreferences("token",MODE_PRIVATE);
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            executorService.shutdownNow();
             Intent intent = new Intent(MainActivity.this,AccountsActivity.class);
             startActivity(intent);
         }

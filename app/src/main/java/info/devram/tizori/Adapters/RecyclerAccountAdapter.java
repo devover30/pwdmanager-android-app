@@ -1,6 +1,5 @@
 package info.devram.tizori.Adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +19,13 @@ import java.util.List;
 public class RecyclerAccountAdapter extends
         RecyclerView.Adapter<RecyclerAccountAdapter.ViewHolder> {
 
-    private Context context;
     private List<Accounts> accountsList;
-    private RecyclerOnClick onRecylerClick;
 
-    public RecyclerAccountAdapter(Context context,
-                                  List<Accounts> accountsList, RecyclerOnClick onRecyclerClick) {
-        this.context = context;
+
+    public RecyclerAccountAdapter(List<Accounts> accountsList) {
+
         this.accountsList = accountsList;
-        this.onRecylerClick = onRecyclerClick;
+
     }
 
     @NonNull
@@ -38,7 +35,7 @@ public class RecyclerAccountAdapter extends
                     .inflate(R.layout.account_row,parent,false);
 
 
-        return new ViewHolder(view,onRecylerClick);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -50,6 +47,7 @@ public class RecyclerAccountAdapter extends
         holder.accountName.setText(account.getAccountName());
         holder.accountLoginID.setText(account.getLoginId());
         holder.accountLoginPwd.setText(account.getLoginPwd());
+        holder.createdDate.setText(account.getCreatedDate());
 
         switch (account.getType()) {
             case "email":
@@ -93,17 +91,17 @@ public class RecyclerAccountAdapter extends
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView accountType;
         public TextView accountName;
         public TextView accountLoginID;
         public TextView accountLoginPwd;
         public ImageView imageView;
-        public TextView optionsMenu;
-        private RecyclerOnClick recyclerOnClick;
+        public TextView createdDate;
 
-        public ViewHolder(@NonNull View itemView,RecyclerOnClick recyclerOnClick) {
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             accountType = itemView.findViewById(R.id.type_txt_view);
@@ -111,16 +109,9 @@ public class RecyclerAccountAdapter extends
             accountLoginID = itemView.findViewById(R.id.accLoginId);
             accountLoginPwd = itemView.findViewById(R.id.accLoginPwd);
             imageView = itemView.findViewById(R.id.icon_img_view);
-            optionsMenu = itemView.findViewById(R.id.textViewOptions);
-            this.recyclerOnClick = recyclerOnClick;
-            optionsMenu.setOnClickListener(this);
-            //itemView.setOnClickListener(this);
+            createdDate = itemView.findViewById(R.id.dateCreated);
         }
 
-        @Override
-        public void onClick(View v) {
-            String accountType = accountsList.get(getAdapterPosition()).getType();
-            recyclerOnClick.onItemClicked(v,getAdapterPosition(),accountType);
-        }
+
     }
 }
