@@ -1,4 +1,4 @@
-package info.devram.tizori.controller;
+package info.devram.tizori.Controller;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import info.devram.tizori.Models.Accounts;
 import info.devram.tizori.Config.Util;
-import info.devram.tizori.Models.ModelsHandler;
+import info.devram.tizori.Interfaces.ModelsHandler;
 
 
 public class DatabaseHandler extends SQLiteOpenHelper {

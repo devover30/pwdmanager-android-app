@@ -13,7 +13,7 @@ import java.util.List;
 import info.devram.tizori.Models.Accounts;
 import info.devram.tizori.Repository.ApiAccountRepository;
 import info.devram.tizori.Repository.DBAccountsRepository;
-import info.devram.tizori.Repository.ApiResponseListener;
+import info.devram.tizori.Interfaces.ApiResponseListener;
 
 
 public class AccountActivityViewModel extends AndroidViewModel {

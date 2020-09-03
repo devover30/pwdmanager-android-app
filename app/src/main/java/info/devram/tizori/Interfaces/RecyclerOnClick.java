@@ -1,4 +1,4 @@
-package info.devram.tizori.Adapters;
+package info.devram.tizori.Interfaces;
 
 import android.view.View;
 

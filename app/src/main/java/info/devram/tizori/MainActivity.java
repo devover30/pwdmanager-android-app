@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,20 +15,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import info.devram.tizori.controller.LoginAsyncResponse;
-import info.devram.tizori.controller.LoginHandler;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import info.devram.tizori.Controller.LoginHandler;
+import info.devram.tizori.Interfaces.LoginAsyncListener;
+import info.devram.tizori.Models.UserEntity;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity
+        implements View.OnClickListener, LoginAsyncListener {
 
+    private static final String TAG = "MainActivity";
+    
     private EditText userEmail;
     private EditText userPassword;
     private Button loginButton;
-    SharedPreferences sharedPreferences;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loginButton = findViewById(R.id.login_btn);
 
         loginButton.setOnClickListener(this);
-
-        sharedPreferences = getSharedPreferences(
-                String.valueOf(R.string.shared_pref),MODE_PRIVATE
-        );
-
     }
 
     @Override
@@ -72,44 +73,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
-        String email = userEmail.getText().toString().trim();
-        String pass = userPassword.getText().toString().trim();
-
-
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        new LoginHandler().checkLogin(email, pass,
-                getApplicationContext(), new LoginAsyncResponse() {
-            @Override
-            public void getToken(String token) {
-                editor.putString("token",token);
-                editor.apply();
-
-                Intent intent = new Intent(MainActivity.this,
-                        AccountsActivity.class);
-
-                startActivity(intent);
-            }
-
-            @Override
-            public void responseError(Boolean isNetworkError) {
-                if (isNetworkError) {
-
-                    showToast("Network Issue! Try Again Later");
-                }else {
-                    showToast("Email/Password Incorrect!!");
-                }
-
-            }
-
-
-        });
+        Log.d(TAG, "onClick: starts");
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUser_email(userEmail.getText().toString().trim());
+        userEntity.setUser_pwd(userPassword.getText().toString().trim());
+        Log.d(TAG, "onClick: " + userEntity);
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        LoginHandler loginHandler = new LoginHandler(userEntity,this);
+        executorService.execute(loginHandler);
+        Log.d(TAG, "onClick: ends");
     }
 
     private void showToast(String message) {
         Toast toast = Toast.makeText(MainActivity.this,message,Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP,0,0);
         toast.show();
+    }
+
+    @Override
+    public void loginResponse(JSONObject jsonObject,int statusCode) {
+        Log.d(TAG, "loginResponse: starts");
+        if (statusCode == 200) {
+            SharedPreferences sharedPreferences = getSharedPreferences("token",MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            try {
+                editor.putString("token",jsonObject.getString("msg"));
+                editor.apply();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent(MainActivity.this,AccountsActivity.class);
+            startActivity(intent);
+        }
+        Log.d(TAG, "loginResponse: " + jsonObject);
+        Log.d(TAG, "loginResponse: " + statusCode);
+        Log.d(TAG, "loginResponse: ends");
     }
 }

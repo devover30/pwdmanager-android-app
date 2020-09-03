@@ -3,6 +3,7 @@ package info.devram.tizori.Models;
 import android.database.sqlite.SQLiteDatabase;
 
 import info.devram.tizori.Config.Util;
+import info.devram.tizori.Interfaces.ModelsHandler;
 
 public class Accounts {
 

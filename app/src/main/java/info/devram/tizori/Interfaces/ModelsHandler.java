@@ -1,4 +1,4 @@
-package info.devram.tizori.Models;
+package info.devram.tizori.Interfaces;
 
 import android.database.sqlite.SQLiteDatabase;
 

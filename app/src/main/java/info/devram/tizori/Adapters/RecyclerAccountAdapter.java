@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import info.devram.tizori.Interfaces.RecyclerOnClick;
 import info.devram.tizori.R;
 import info.devram.tizori.Models.Accounts;
 

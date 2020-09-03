@@ -13,7 +13,7 @@ public class Util {
     public static final String KEY_LOGIN_PWD = "login_pwd";
     public static final String KEY_CREATED_DATE = "created_date";
 
-    public static final String KEY_URL_LOGIN = "https://pwdmanager.devram.info/auth";
-    public static final String KEY_URL_ACCOUNTS = "https://pwdmanager.devram.info/accounts";
+    public static final String KEY_URL_LOGIN = "http://pwdmanager.devram.info/auth";
+    public static final String KEY_URL_ACCOUNTS = "http://pwdmanager.devram.info/accounts";
     //public static final String KEY_URL_USERS = "https://pwdmanager.devram.info/users";
 }

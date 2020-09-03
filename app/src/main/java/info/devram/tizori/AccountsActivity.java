@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -22,7 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import info.devram.tizori.Adapters.RecyclerOnClick;
+import info.devram.tizori.Interfaces.RecyclerOnClick;
 import info.devram.tizori.Models.Accounts;
 import info.devram.tizori.UI.ConfirmDialog;
 import info.devram.tizori.ViewModel.AccountActivityViewModel;

@@ -1,9 +1,9 @@
-package info.devram.tizori.Repository;
+package info.devram.tizori.Interfaces;
 
 import java.util.List;
 
 
-interface DatabaseService<T> {
+public interface DatabaseService<T> {
 
     public Boolean addData(T obj);
 

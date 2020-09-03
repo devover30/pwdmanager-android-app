@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import info.devram.tizori.Config.Util;
+import info.devram.tizori.Interfaces.DatabaseService;
 import info.devram.tizori.Models.Accounts;
-import info.devram.tizori.controller.DatabaseHandler;
+import info.devram.tizori.Controller.DatabaseHandler;
 
 
 public class DBAccountsRepository implements

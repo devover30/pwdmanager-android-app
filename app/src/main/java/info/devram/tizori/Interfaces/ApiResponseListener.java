@@ -1,4 +1,4 @@
-package info.devram.tizori.Repository;
+package info.devram.tizori.Interfaces;
 
 import java.util.List;
 
